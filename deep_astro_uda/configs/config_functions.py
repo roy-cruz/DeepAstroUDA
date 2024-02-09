@@ -16,6 +16,7 @@ class ConfigParser:
             self.config_file = config_file
 
         self.config = self.parse_config()
+        # print(self.config.keys())
 
     def parse_config(self):
 

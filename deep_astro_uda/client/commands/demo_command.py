@@ -1,6 +1,6 @@
 from cleo.helpers import option
 from cleo.commands.command import Command
-from deep_astro_uda.model.train import train
+# from deep_astro_uda.model.train import train
 from deep_astro_uda.settings import DEFAULT_CONFIG_PATH
 from deep_astro_uda.client.options import config_path
 from deep_astro_uda.configs.config_functions import ConfigParser
@@ -21,13 +21,13 @@ class DemoCommand(Command):
     help = ""
 
     def handle(self):        
-
+        print("---------------------------------------------------------------------")
         config_path = self.option('config-path')
         
-        # parser = ConfigParser(file_path=output_path, filename="astroNN_10_train_config_open.yaml")
-        parser = ConfigParser(config_file=config_path)
+        parser = ConfigParser(file_path="/home/roycruz/dauda/DeepAstroUDA/deep_astro_uda/config_files", filename="astroNN_10_train_config_open.yaml")
+        # parser = ConfigParser(config_file=config_path)
 
-        output_path = parser.config["output_path"]
+        output_path = parser.config["output"]["output_path"]
         
         self.line(f"Running the DeepAstroUDA demo. All output will be saved here: {output_path}")
 

@@ -5,7 +5,7 @@ from deep_astro_uda.data_utils.download_data import Downloader
 from deep_astro_uda.settings import DATASET_NAMES, DEFAULT_CONFIG_PATH
 import os
 import shutil 
-from deep_astro_uda.model.train import train
+# from deep_astro_uda.model.train import train
 from deep_astro_uda.model.eval import test
 
 # TODO: Add docstrings.
