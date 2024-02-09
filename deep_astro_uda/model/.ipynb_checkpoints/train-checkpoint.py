@@ -18,31 +18,53 @@ from deep_astro_uda.model.loss import *
 from models.LinearAverage import LinearAverage
 from deep_astro_uda.model.eval import test
 
+from tensorflow.python.client import device_lib
+
 # Training settings
 
 from deep_astro_uda.client import commands
 from deep_astro_uda.client.options import config_path
 from deep_astro_uda.configs.config_functions import ConfigParser
-# config = ConfigParser(config_path="config_templates/", filename="config.yaml")
-config = ConfigParser("config_templates/", filename="config.yaml")
+config = ConfigParser(file_path="/home/roycruz/dauda/DeepAstroUDA/deep_astro_uda/config_files/", filename="config.yaml")
+# config = ConfigParser("config_templates/", filename="config.yaml")
 
 # args = parser.parse_args()
-args = commands
-config_file = args.config
-conf = yaml.load(open(config_file))
-save_config = yaml.load(open(config_file))
+# DONT USE commands
+# args = commands 
+# config_file = args.config
+config_file = "/home/roycruz/dauda/DeepAstroUDA/deep_astro_uda/config_files/config.yaml"
+conf = yaml.safe_load(open(config_file))
+save_config = yaml.safe_load(open(config_file))
 conf = easydict.EasyDict(conf)
-gpu_devices = ','.join([str(id) for id in args.gpu_devices])
-os.environ["CUDA_VISIBLE_DEVICES"] = gpu_devices
+# gpu_devices = ','.join([str(id) for id in args.gpu_devices])
+# os.environ["CUDA_VISIBLE_DEVICES"] = gpu_devices
+# print(device_lib.list_local_devices())
+# print(type(device_lib.list_local_devices()))
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+cuda = torch.cuda.is_available()
 
-args.cuda = torch.cuda.is_available()
-source_data = args.source_path
-target_data = args.target_path
-evaluation_data = args.target_path
+if torch.cuda.is_available():
+    print("CUDA is available. GPU Details:")
+    # Get the number of GPUs available
+    num_gpus = torch.cuda.device_count()
+    for i in range(num_gpus):
+        print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
+else:
+    print("CUDA is not available. Running on CPU.")
+
+# args.cuda = torch.cuda.is_available()
+# source_data = args.source_path
+source_data = "./source_" + conf["data"]["dataset"]["name"]
+# target_data = args.target_path
+target_data = "./target_" + "data"
+# evaluation_data = args.target_path
+evaluation_data = "./evaluation_data"
 
 batch_size = conf.data.dataloader.batch_size
 filename = source_data.split("_")[1] + "2" + target_data.split("_")[1]
-filename = os.path.join("record", args.exp_name,
+# filename = os.path.join("record", args.exp_name,
+                        # config_file.replace(".yaml", ""), filename)
+filename = os.path.join("record", conf["data"]["dataset"]["name"],
                         config_file.replace(".yaml", ""), filename)
 if not os.path.exists(os.path.dirname(filename)):
     os.makedirs(os.path.dirname(filename))

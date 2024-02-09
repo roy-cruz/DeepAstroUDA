@@ -1,4 +1,4 @@
-from ..mydataset import ImageFolder # Changed
+from ..mydataset.ImageFolder import ImageFolder # Changed
 from ..unaligned_data_loader import UnalignedDataLoader # Changed
 from collections import Counter
 import os
@@ -8,8 +8,8 @@ from torch.utils.data import DataLoader, WeightedRandomSampler
 def get_loader(source_path, target_path, evaluation_path, transforms,
                batch_size=32, return_id=False, balanced=False):
     source_folder = ImageFolder(os.path.join(source_path),
-                                transforms[source_path],
-                                return_id=return_id)
+                                transforms[source_path])
+                                # return_id=return_id)
     target_folder_train = ImageFolder(os.path.join(target_path),
                                       transform=transforms[target_path],
                                       return_paths=False, return_id=return_id)

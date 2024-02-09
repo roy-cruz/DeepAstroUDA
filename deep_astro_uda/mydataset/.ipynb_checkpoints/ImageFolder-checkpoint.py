@@ -39,7 +39,7 @@ def rgb_to_chromaticity(rgb):
     return irg
 
 def make_dataset(list_dir):
-    file_name = os.path.join(list_dir, "img_batch.p")
+    file_name = os.path.join(list_dir + "img_batch.p")
     images_list = pickle.load( open( file_name, "rb" ) )
     return images_list
 
