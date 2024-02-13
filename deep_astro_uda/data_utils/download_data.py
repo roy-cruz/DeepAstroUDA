@@ -30,13 +30,15 @@ class Downloader:
         # Extract the images and labels.
         images,labels = load_galaxy10()
 
-        # Create the original and simulated folders in the output directory.
+        print("Making original and simulated folders")
+
         original_dir = os.path.join(self.output_dir, "original")
         simulated_dir = os.path.join(self.output_dir, "simulated")
-
-        os.mkdir(original_dir)
-
-        os.mkdir(simulated_dir)
+        
+        os.makedirs(original_dir, exist_ok=True)
+        os.makedirs(simulated_dir, exist_ok=True)
+        
+        print("Finished making folders")
 
         # Create the label folders in the output directory.
         self.__create_folders_from_labels__(labels, original_dir)

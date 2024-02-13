@@ -25,6 +25,7 @@ class DemoCommand(Command):
         config_path = self.option('config-path')
         
         parser = ConfigParser(file_path="/home/roycruz/dauda/DeepAstroUDA/deep_astro_uda/config_files", filename="astroNN_10_train_config_open.yaml")
+        
         # parser = ConfigParser(config_file=config_path)
 
         output_path = parser.config["output"]["output_path"]
@@ -34,11 +35,15 @@ class DemoCommand(Command):
         # Download the Astro-nn data from the website. Save it in respective folders.
         download = Downloader(output_dir=output_path)
 
-        download.download_data(dataset_name="astro-nn")
-
+        # COMMENTED JUST FOR FASTER TESTING, BUT WORKS DURING TESTING
+        # download.download_data(dataset_name="astro-nn")
+        
         # Train the resnet model on the data using the default config file for astro-nn.
-        train_parser = ConfigParser(config_path=config_path, filename="astroNN_10_train_config_open.yaml")
 
+        # print(config_path)
+        
+        # train_parser = ConfigParser(file_path="/home/roycruz/dauda/DeepAstroUDA/deep_astro_uda/config_files", filename="astroNN_10_train_config_open.yaml")
+        
         # TODO: Implement function and add here.
         # Run inference using the test set.
             # Load saved model and attempt inference.
